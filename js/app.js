@@ -15,34 +15,49 @@ const ageElement = document.getElementById("age") // object | null
 //recupero variabile di stampa
 const resultElement = document.getElementById("result") //object | null
 
+//recupero variabile di stampa
+const rpKmElement = document.getElementById("rpKm") //object | null
+
+//recupero variabile di stampa
+const rpPrezzoBaseElement = document.getElementById("rpPrezzoBase") //object | null
+
+//recupero variabile di stampa
+const rpScontoElement = document.getElementById("rpSconto") //object | null
+
 //calcolo il costo al km
-const costkm = 0.21 
+const costkm = 0.21
 
 
-buttonElement.addEventListener('click', function () {
-	//console.log('click sul button')
+buttonElement.addEventListener('submit', function (event) {
+    //console.log('click sul button')
+    event.preventDefault()
 
-     const km = parseFloat(kmElement.value) // number
-	// console.log('numero di km percorsi: ', km)
+    const km = parseFloat(kmElement.value) // number
+    // console.log('numero di km percorsi: ', km)
 
- 	const age = parseInt(ageElement.value) // number
-	
+    const age = ageElement.value // number
+
     //calcolo costo al km
     const basePrice = km * costkm
 
     let discount = 0
 
     //calcolo sconti
-    if(age > 18){
+    if (age === "Minorenne") {
         discount = 0.2
+        rpScontoElement.innerHTML = "20%"
     }
-    else if(age < 65){
+    else if (age === "Old") {
         discount = 0.4
+        rpScontoElement.innerHTML = "40%"
+    }
+    else {
+        rpScontoElement.innerHTML = "n/a"
     }
 
-    console.log((basePrice-basePrice*discount).toFixed(2))
-    
-    resultElement.innerHTML = (basePrice-basePrice*discount).toFixed(2)
-    
+    //console.log((basePrice-basePrice*discount).toFixed(2))
 
+    resultElement.innerHTML = ("€ " + (basePrice - basePrice * discount).toFixed(2))
+    rpKmElement.innerHTML = km
+    rpPrezzoBaseElement.innerHTML = "€ " + costkm
 })
